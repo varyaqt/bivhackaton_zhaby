@@ -64,17 +64,18 @@
                     <button id="nextMonth">&gt;</button>
                 </div>
                 <div class="calendar-days">
-                    <div class="day">S</div>
-                    <div class="day">M</div>
-                    <div class="day">T</div>
-                    <div class="day">W</div>
-                    <div class="day">T</div>
-                    <div class="day">F</div>
-                    <div class="day">S</div>
+                    <div class="day">Пн</div>
+                    <div class="day">Вт</div>
+                    <div class="day">Ср</div>
+                    <div class="day">Чт</div>
+                    <div class="day">Пт</div>
+                    <div class="day">Сб</div>
+                    <div class="day">Вс</div>
                 </div>
                 <div class="calendar-dates" id="calendarDates"></div>
             </div>
         </div>
+        
         <button class="new-article" id="newArticleBtn">
             Добавить элемент
         </button>
@@ -85,27 +86,23 @@
             <div class="form-content">
                 <div class="form-section">
                     <label for="newArticleInput">Создать новый элемент</label>
-                    <input type="text" id="newArticleInput" placeholder="Новый элемент">
+                    <input type="text" id="newArticleInput" placeholder="Название элемента" required>
                 </div>
                 <div class="form-section">
-                    <label for="previewInput">Preview</label>
-                    <input type="text" id="previewInput" placeholder="Preview">
+                    <label for="insuranceType">Выберите тип страхования:</label>
+                    <select id="insuranceType">
+                        <option value="medical">Медицинское страхование</option>
+                        <option value="car">Автомобильное страхование</option>
+                        <option value="property">Страхование имущества</option>
+                    </select>
                 </div>
-                <div class="form-section">
-                    <label for="insurancePeriodInput">Сроки страхования</label>
-                    <input type="text" id="insurancePeriodInput" placeholder="Сроки страхования">
-                </div>
-                <div class="form-section">
-                    <label for="periodInput">Период</label>
-                    <input type="text" id="periodInput" placeholder="Период">
-                </div>
+                <div class="form-section" id="dynamicFields"></div>
             </div>
             <button id="createArticleBtn">Создать</button>
         </div>
         <div class="draggable-items" id="draggableItems"></div>
     </main>
     
-
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
 </body>

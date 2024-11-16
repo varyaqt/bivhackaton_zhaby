@@ -14,7 +14,6 @@
   font-display: swap;
 }
 
-
 /**
 Нормализация блочной модели
 */
@@ -399,7 +398,7 @@ body {
 .calendar-days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 23px;
+  gap: 18px;
   margin-bottom: 10px;
 }
 
@@ -541,16 +540,54 @@ body {
 .new-article-form button:hover {
   background-color: var(--color-secondary);
 }
-
 .draggable-items {
   margin-top: 20px;
 }
 
 .draggable-item {
-  background-color: var(--color-secondary);
+  background-color: var(--color-sub-secondary);
   color: var(--color-background);
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 10px;
   cursor: move;
+  max-width: 300px; /* Ограничиваем максимальную ширину */
+  width: 100%; /* Заполняем доступное пространство */
+}
+
+.draggable-window {
+  width: 300px;
+  background-color: var(--color-sub-secondary);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  user-select: none;
+  border: none;
+  border-radius: 10px;
+  max-width: 300px; /* Ограничиваем максимальную ширину */
+  width: 100%; /* Заполняем доступное пространство */
+}
+
+select[multiple] {
+  height: auto; /* Автоматическая высота для отображения всех опций */
+  padding: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-size: 16px;
+  font-family: var(--font-family-base);
+  margin-bottom: 20px;
+  max-width: 300px; /* Ограничиваем максимальную ширину */
+  width: 100%; /* Заполняем доступное пространство */
+}
+
+select[multiple] option {
+  padding: 5px;
+}
+
+select[multiple] option:checked {
+  background-color: var(--color-main);
+  color: var(--color-background);
 }

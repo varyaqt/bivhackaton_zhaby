@@ -25,9 +25,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const firstDay = new Date(year, month, 1);
         const lastDay = new Date(year, month + 1, 0);
         const daysInMonth = lastDay.getDate();
-        const startDay = firstDay.getDay();
+        const startDay = (firstDay.getDay() + 6) % 7; // Начинаем с понедельника
 
-        currentMonthElement.textContent = firstDay.toLocaleString('default', { month: 'long', year: 'numeric' });
+        currentMonthElement.textContent = firstDay.toLocaleString('ru-RU', { month: 'long', year: 'numeric' });
         calendarDates.innerHTML = '';
 
         for (let i = 0; i < startDay; i++) {
@@ -87,8 +87,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        selectedDateElement.value = `${selectedStartDate.toLocaleDateString('en-US')} - ${selectedEndDate ? selectedEndDate.toLocaleDateString('en-US') : ''}`;
+        selectedDateElement.value = `${formatDate(selectedStartDate)} - ${selectedEndDate ? formatDate(selectedEndDate) : ''}`;
         renderCalendar();
+    }
+
+    function formatDate(date) {
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}.${month}.${year}`;
     }
 
     prevMonthBtn.addEventListener('click', () => {
@@ -126,40 +133,105 @@ document.addEventListener('DOMContentLoaded', function() {
         target.setAttribute('data-x', x);
         target.setAttribute('data-y', y);
     }
+
     const newArticleBtn = document.getElementById('newArticleBtn');
     const newArticleForm = document.getElementById('newArticleForm');
     const newArticleInput = document.getElementById('newArticleInput');
-    const previewInput = document.getElementById('previewInput');
-    const insurancePeriodInput = document.getElementById('insurancePeriodInput');
-    const periodInput = document.getElementById('periodInput');
     const createArticleBtn = document.getElementById('createArticleBtn');
     const draggableItems = document.getElementById('draggableItems');
+    const insuranceTypeSelect = document.getElementById('insuranceType');
+    const dynamicFields = document.getElementById('dynamicFields');
+
+    const fieldsConfig = {
+        medical: [
+            { label: 'Номер полиса', type: 'text' },
+            { label: 'Дата начала', type: 'date' },
+            { label: 'Дата окончания', type: 'date' }
+        ],
+        car: [
+            { label: 'Номер автомобиля', type: 'text' },
+            { label: 'Марка', type: 'text' },
+            { label: 'Модель', type: 'text' }
+        ],
+        property: [
+            { label: 'Адрес', type: 'text' },
+            { label: 'Тип имущества', type: 'text' },
+            { label: 'Стоимость', type: 'number' }
+        ]
+    };
+
+    function renderFields(type) {
+        dynamicFields.innerHTML = ''; // Очищаем контейнер
+
+        const fields = fieldsConfig[type];
+        if (fields) {
+            fields.forEach(field => {
+                const div = document.createElement('div');
+                const label = document.createElement('label');
+                label.textContent = field.label;
+                const input = document.createElement('input');
+                input.type = field.type;
+                input.name = field.label.toLowerCase().replace(' ', '_');
+
+                div.appendChild(label);
+                div.appendChild(input);
+                dynamicFields.appendChild(div);
+            });
+        }
+    }
+
+    insuranceTypeSelect.addEventListener('change', function() {
+        const selectedType = insuranceTypeSelect.value;
+        renderFields(selectedType);
+    });
+
+    // Инициализация полей при загрузке страницы
+    renderFields(insuranceTypeSelect.value);
 
     newArticleBtn.addEventListener('click', function() {
         newArticleForm.style.display = 'block';
     });
 
-    createArticleBtn.addEventListener('click', function() {
-        const newItemText = newArticleInput.value.trim();
-        const previewText = previewInput.value.trim();
-        const insurancePeriodText = insurancePeriodInput.value.trim();
-        const periodText = periodInput.value.trim();
+    createArticleBtn.addEventListener('click', function(event) {
+        event.preventDefault(); // Предотвращаем отправку формы
 
-        if (newItemText || previewText || insurancePeriodText || periodText) {
+        const newItemText = newArticleInput.value.trim();
+        const selectedType = insuranceTypeSelect.value;
+        const fields = fieldsConfig[selectedType];
+        const fieldValues = {};
+
+        fields.forEach(field => {
+            const input = document.querySelector(`input[name="${field.label.toLowerCase().replace(' ', '_')}"]`);
+            fieldValues[field.label] = input.value;
+        });
+
+        // Проверяем, что поле newArticleInput заполнено
+        if (newItemText === '') {
+            alert('Пожалуйста, введите название элемента.');
+            return;
+        }
+
+        if (newItemText || Object.keys(fieldValues).length > 0) {
             const newItem = document.createElement('div');
             newItem.className = 'draggable-item';
             newItem.innerHTML = `
                 <p>Созданный элемент: ${newItemText}</p>
-                <p>Preview: ${previewText}</p>
-                <p>Сроки страхования: ${insurancePeriodText}</p>
-                <p>Период: ${periodText}</p>
+                <p>Тип страхования: ${selectedType}</p>
+                <p>Значения полей: ${JSON.stringify(fieldValues)}</p>
             `;
+
+            // Изменяем стиль параграфов
+            const paragraphs = newItem.querySelectorAll('p');
+            paragraphs.forEach(paragraph => {
+                paragraph.style.color = 'var(--color-text)';
+                paragraph.style.fontSize = '20px';
+                paragraph.style.fontWeight = "bold";
+                paragraph.style.marginBottom = '5px';
+            });
+
             draggableItems.appendChild(newItem);
 
             newArticleInput.value = '';
-            previewInput.value = '';
-            insurancePeriodInput.value = '';
-            periodInput.value = '';
             newArticleForm.style.display = 'none';
 
             // Настройка перетаскивания с помощью interact.js
@@ -178,13 +250,46 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    function dragMoveListener(event) {
-        const target = event.target;
-        const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
-        const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+    const draggableWindow = document.getElementById('draggableWindow');
+    const windowHeader = document.getElementById('windowHeader');
 
-        target.style.transform = `translate(${x}px, ${y}px)`;
-        target.setAttribute('data-x', x);
-        target.setAttribute('data-y', y);
-    }
+    let isDragging = false;
+    let offsetX, offsetY;
+
+    windowHeader.addEventListener('mousedown', function(e) {
+        isDragging = true;
+        offsetX = e.clientX - draggableWindow.offsetLeft;
+        offsetY = e.clientY - draggableWindow.offsetTop;
+    });
+
+    document.addEventListener('mousemove', function(e) {
+        if (isDragging) {
+            const newX = e.clientX - offsetX;
+            const newY = e.clientY - offsetY;
+
+            // Ограничиваем перетаскивание областью mainContent
+            const mainContentRect = mainContent.getBoundingClientRect();
+            const draggableWindowRect = draggableWindow.getBoundingClientRect();
+
+            if (newX < mainContentRect.left) {
+                draggableWindow.style.left = mainContentRect.left + 'px';
+            } else if (newX + draggableWindowRect.width > mainContentRect.right) {
+                draggableWindow.style.left = mainContentRect.right - draggableWindowRect.width + 'px';
+            } else {
+                draggableWindow.style.left = newX + 'px';
+            }
+
+            if (newY < mainContentRect.top) {
+                draggableWindow.style.top = mainContentRect.top + 'px';
+            } else if (newY + draggableWindowRect.height > mainContentRect.bottom) {
+                draggableWindow.style.top = mainContentRect.bottom - draggableWindowRect.height + 'px';
+            } else {
+                draggableWindow.style.top = newY + 'px';
+            }
+        }
+    });
+
+    document.addEventListener('mouseup', function() {
+        isDragging = false;
+    });
 });
