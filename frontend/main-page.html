@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIV Страхование</title>
+    <link rel="icon" type="image/svg" href="/icons/biv-logo.svg">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-logo">
+            <img src="./icons/biv-logo.svg" alt="Логотип" width="65" height="30">
+        </div>
+        <div class="insurance">
+            Страхование
+        </div>
+    </header>
+
+    <nav class="navigation" id="sidebar">
+        <button class="toggle-btn" id="toggleBtn">
+            <img src="/icons/burger.svg" alt="">
+        </button>
+        <div class="sidebar-content">
+            <a href="#" class="sidebar-link">
+                <img src="/icons/choosen-burger.svg" alt="">
+            </a>
+            <a href="#" class="sidebar-link">
+                <img src="/icons/notchoosen-burger.svg" alt="">
+            </a>
+            <a href="#" class="sidebar-link">
+                <img src="/icons/notchoosen-burger.svg" alt="">
+            </a>
+            <a href="#" class="sidebar-link">
+                <img src="/icons/notchoosen-burger.svg" alt="">
+            </a>
+            <a href="#" class="sidebar-link">
+                <img src="/icons/notchoosen-burger.svg" alt="">
+            </a>
+            <a href="#" class="sidebar-link">
+                <img src="/icons/user-icon.svg" alt="">
+            </a>
+        </div>
+    </nav>
+
+    <main class="content" id="mainContent">
+        <div class="main-section">
+            <ul class="section-list">
+                <li class="section-item">
+                    <a href="" class="section-link"><b>Основная информация</b></a>
+                </li>
+                <li class="section-item">
+                    <a href="" class="section-link">Структура продукта</a>
+                </li>
+                <li class="section-item">
+                    <a href="" class="section-link">Настройки продукта</a>
+                </li>
+                <li class="section-item">
+                    <a href="" class="section-link">Расширенные поля договора</a>
+                </li>
+                <li class="section-item">
+                    <a href="" class="section-link">Прикрепленные документы</a>
+                </li>
+                <li class="section-item">
+                    <a href="" class="section-link">Печатные документы</a>
+                </li>
+            </ul>
+        </div>
+        <div class="calendar-section draggable">
+            <div class="calendar-header">
+                <div class="calendar-title">Срок страхования продукта</div>
+                <div class="calendar-date">
+                    <input type="text" id="selectedDate" readonly>
+                </div>
+            </div>
+            <div class="calendar-body">
+                <div class="calendar-month">
+                    <button id="prevMonth">&lt;</button>
+                    <span id="currentMonth"></span>
+                    <button id="nextMonth">&gt;</button>
+                </div>
+                <div class="calendar-days">
+                    <div class="day">S</div>
+                    <div class="day">M</div>
+                    <div class="day">T</div>
+                    <div class="day">W</div>
+                    <div class="day">T</div>
+                    <div class="day">F</div>
+                    <div class="day">S</div>
+                </div>
+                <div class="calendar-dates" id="calendarDates"></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+</body>
+</html>
