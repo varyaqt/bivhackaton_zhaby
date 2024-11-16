@@ -348,16 +348,17 @@ body {
 
 .calendar-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column; /* Изменяем направление flexbox на column */
+  align-items: center; /* Выравниваем элементы по центру */
   margin-bottom: 20px;
   position: relative;
-    z-index: 1;
+  z-index: 1;
 }
 
 .calendar-title {
   font-size: 20px;
   font-weight: bold;
+  margin-bottom: 10px; /* Добавляем отступ снизу */
 }
 
 .calendar-date input {
