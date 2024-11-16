@@ -322,7 +322,7 @@ body {
     padding: 10px;
     text-align: center;
     transition: margin-left var(--transition-duration) ease, width var(--transition-duration) ease;
-    min-height: 400px;
+    min-height: 70vh;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
