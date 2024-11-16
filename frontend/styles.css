@@ -726,6 +726,80 @@ select[multiple] option:checked {
 
 
 
+.organization-widget {
+  width: 30vw;
+  background-color: var(--color-sub-secondary);
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  font-size: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.organization-widget .widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.organization-widget .widget-title {
+  font-weight: bold;
+}
+
+.organization-widget .widget-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.organization-widget select {
+  width: 60%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.organization-widget button {
+  display: inline-block;
+  align-items: center;
+  font-family: var(--font-family-base);
+  color: var(--color-accent);
+  background-color: var(--color-secondary);
+  border: none;
+  font-size: 16px;
+  z-index: 100;
+  padding: 10px; /* Дополнительный отступ внутри элемента */
+  border-radius: 10px; /* Закругление углов */
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.organization-widget button::before{
+  content: "";
+  background-image: url(/frontend/icons/pen.svg);
+  width: 24px;
+  height: 24px;
+  background-size: cover;
+  display: inline-block;
+  vertical-align: middle; /* Опустить стрелочку на уровень текста */
+  transition: background-image 0.3s ease;
+
+}
+
+.organization-widget button:hover {
+  color: var(--color-background);
+  background-color: var(--color-main);
+}
+
+
+.organization-widget button:hover::before{
+  background-image: url(/frontend/icons/pen-hover.svg);
+}
+
+
+
 /* Стили для окна зависимостей */
 .dependency-window {
   position: fixed;
@@ -745,6 +819,7 @@ select[multiple] option:checked {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+  font-size: 20px;
 }
 
 .dependency-window .window-title {
@@ -758,12 +833,40 @@ select[multiple] option:checked {
 .dependency-window button {
   padding: 5px 10px;
   border: none;
-  background-color: #007bff;
-  color: white;
+  color: var(--color-accent);
+  background-color: var(--color-secondary);
   border-radius: 3px;
   cursor: pointer;
 }
 
 .dependency-window button:hover {
-  background-color: #0056b3;
+  color: var(--color-background);
+  background-color: var(--color-main);
+}
+
+.dependency-editor {
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.dependency-editor label {
+  display: block;
+  margin-bottom: 5px;
+  border-radius: 10px;
+}
+
+.dependency-editor select {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.dependency-list .dependency-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
 }

@@ -165,6 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
             { name: 'Адрес', type: 'text' },
             { name: 'Владелец', type: 'text' }
         ]
+        // Добавьте другие категории и шаблоны по аналогии
     };
 
     function renderTemplates(category) {
@@ -182,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const newItem = document.createElement('div');
         newItem.className = 'draggable-item';
         newItem.innerHTML = `
-            <p><b>${template.name}</b></p>
+            <p>${template.name}</p>
             ${getInputField(template.type)}
         `;
         draggableItems.appendChild(newItem);
@@ -254,16 +255,39 @@ document.addEventListener('DOMContentLoaded', function() {
     // Инициализация шаблонов для начальной категории
     renderTemplates('medical');
 
-    const dependencyBtn = document.getElementById('dependencyBtn');
+    const dependencyBtns = document.querySelectorAll('.dependencyBtn');
     const dependencyWindow = document.getElementById('dependencyWindow');
     const closeDependencyBtn = document.getElementById('closeDependencyBtn');
+    const dependencyField1 = document.getElementById('dependencyField1');
+    const dependencyField2 = document.getElementById('dependencyField2');
+    const addDependencyBtn = document.getElementById('addDependencyBtn');
+    const dependencyList = document.getElementById('dependencyList');
 
-    dependencyBtn.addEventListener('click', function() {
-        dependencyWindow.style.display = 'block';
+    const fieldNames = {
+        currency: 'Валюта страховой суммы',
+        organization: 'Тип организации страхования'
+    };
+
+    dependencyBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            dependencyWindow.style.display = 'block';
+        });
     });
 
     closeDependencyBtn.addEventListener('click', function() {
         dependencyWindow.style.display = 'none';
+    });
+
+    addDependencyBtn.addEventListener('click', function() {
+        const field1 = dependencyField1.value;
+        const field2 = dependencyField2.value;
+
+        if (field1 && field2 && field1 !== field2) {
+            const dependencyItem = document.createElement('div');
+            dependencyItem.className = 'dependency-item';
+            dependencyItem.textContent = `${fieldNames[field1]} зависит от ${fieldNames[field2]}`;
+            dependencyList.appendChild(dependencyItem);
+        }
     });
 
     const draggableWindow = document.getElementById('draggableWindow');

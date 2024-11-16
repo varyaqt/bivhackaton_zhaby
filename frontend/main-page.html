@@ -87,17 +87,46 @@
                     <option value="usd">Доллар США</option>
                     <option value="cny">Юань</option>
                 </select>
-                <button id="dependencyBtn">Зависимости</button>
+                <button class="dependencyBtn">Зависимости</button>
+            </div>
+        </div>
+
+        <div class="organization-widget draggable">
+            <div class="widget-header">
+                <div class="widget-title">Тип организации страхования</div>
+            </div>
+            <div class="widget-body">
+                <select id="organizationSelect">
+                    <option value="agent">Агент</option>
+                    <option value="office">Офис</option>
+                    <option value="partner">Партнёр</option>
+                </select>
+                <button class="dependencyBtn">Зависимости</button>
             </div>
         </div>
 
         <div class="dependency-window" id="dependencyWindow" style="display: none;">
             <div class="window-header">
-                <div class="window-title">Зависимости</div>
+                <div class="window-title">Редактор зависимостей</div>
                 <button id="closeDependencyBtn">Закрыть</button>
             </div>
             <div class="window-body">
-                <!-- Здесь будут отображаться зависимости -->
+                <div class="dependency-editor">
+                    <label for="dependencyField1">Поле 1:</label>
+                    <select id="dependencyField1">
+                        <option value="currency">Валюта страховой суммы</option>
+                        <option value="organization">Тип организации страхования</option>
+                    </select>
+                    <label for="dependencyField2">Поле 2:</label>
+                    <select id="dependencyField2">
+                        <option value="currency">Валюта страховой суммы</option>
+                        <option value="organization">Тип организации страхования</option>
+                    </select>
+                    <button id="addDependencyBtn">Добавить зависимость</button>
+                </div>
+                <div class="dependency-list" id="dependencyList">
+                    <!-- Здесь будут отображаться зависимости -->
+                </div>
             </div>
         </div>
         
