@@ -438,3 +438,43 @@ body {
 .calendar-dates .date.in-range {
   background-color: var(--color-secondary);
 }
+
+.new-article {
+  display: inline-block;
+  align-items: center;
+  font-family: var(--font-family-base);
+  color: var(--color-accent);
+  position: fixed;
+  background-color: var(--color-secondary);
+  border: none;
+  font-size: 16px;
+  z-index: 100;
+  right: 40px; /* Расстояние от правого края */
+  bottom: 40px; /* Расстояние от нижнего края */
+  padding: 10px; /* Дополнительный отступ внутри элемента */
+  border-radius: 5px; /* Закругление углов */
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.new-article::before{
+  content: "";
+  background-image: url(/frontend/icons/pen.svg);
+  width: 24px;
+  height: 24px;
+  background-size: cover;
+  display: inline-block;
+  vertical-align: middle; /* Опустить стрелочку на уровень текста */
+  transition: background-image 0.3s ease;
+
+}
+
+.new-article:hover {
+  color: var(--color-background);
+  background-color: var(--color-main);
+}
+
+.new-article:hover::before{
+  background-image: url(/frontend/icons/pen-hover.svg);
+}
