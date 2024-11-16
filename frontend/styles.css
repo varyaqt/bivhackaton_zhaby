@@ -1,458 +1,460 @@
 @font-face {
-    font-family: 'Archive';
-    src: url(/frontend/fonts/Archive.woff2) format('woff2');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'Archive';
+  src: url(/frontend/fonts/Archive.woff2) format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'Roboto';
-    src: url(/frontend/fonts/Roboto-Regular.woff2) format('woff2');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'Roboto';
+  src: url(/frontend/fonts/Roboto-Regular.woff2) format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 
 /**
-  Нормализация блочной модели
- */
- *,
- ::before,
- ::after {
-   box-sizing: border-box;
- }
- 
- /**
-   Убираем внутренние отступы слева тегам списков,
-   у которых есть атрибут class
-  */
- :where(ul, ol):where([class]) {
-   padding-left: 0;
- }
- 
- /**
-   Убираем внешние отступы body и двум другим тегам,
-   у которых есть атрибут class
-  */
- body,
- :where(blockquote, figure):where([class]) {
-   margin: 0;
- }
- 
- /**
-   Убираем внешние отступы вертикали нужным тегам,
-   у которых есть атрибут class
-  */
- :where(
-   h1,
-   h2,
-   h3,
-   h4,
-   h5,
-   h6,
-   p,
-   ul,
-   ol,
-   dl
- ):where([class]) {
-   margin-block: 0;
- }
- 
- :where(dd[class]) {
-   margin-left: 0;
- }
- 
- :where(fieldset[class]) {
-   margin-left: 0;
-   padding: 0;
-   border: none;
- }
- 
- /**
-   Убираем стандартный маркер маркированному списку,
-   у которого есть атрибут class
-  */
- :where(ul[class]) {
-   list-style: none;
- }
- 
- :where(address[class]) {
-   font-style: normal;
- }
- 
- /**
-   Обнуляем вертикальные внешние отступы параграфа,
-   объявляем локальную переменную для внешнего отступа вниз,
-   чтобы избежать взаимодействие с более сложным селектором
-  */
- p {
-   --paragraphMarginBottom: 24px;
- 
-   margin-block: 0;
- }
- 
- /**
-   Внешний отступ вниз для параграфа без атрибута class,
-   который расположен не последним среди своих соседних элементов
-  */
- p:where(:not([class]):not(:last-child)) {
-   margin-bottom: var(--paragraphMarginBottom);
- }
- 
- 
- /**
-   Упрощаем работу с изображениями и видео
-  */
- img,
- video {
-   display: block;
-   max-width: 100%;
-   height: auto;
- }
- 
- /**
-   Наследуем свойства шрифт для полей ввода
-  */
- input,
- textarea,
- select,
- button {
-   font: inherit;
- }
- 
- html {
-   /**
-     Пригодится в большинстве ситуаций
-     (когда, например, нужно будет "прижать" футер к низу сайта)
-    */
-   height: 100%;
-   /**
-     Убираем скачок интерфейса по горизонтали
-     при появлении / исчезновении скроллбара
-    */
-   scrollbar-gutter: stable;
- }
- 
- /**
-   Плавный скролл
-  */
- html,
- :has(:target) {
-   scroll-behavior: smooth;
- }
- 
- body {
-   /**
-     Пригодится в большинстве ситуаций
-     (когда, например, нужно будет "прижать" футер к низу сайта)
-    */
-   min-height: 100%;
-   /**
-     Унифицированный интерлиньяж
-    */
-   line-height: 1.5;
- }
- 
- /**
-   Нормализация высоты элемента ссылки при его инспектировании в DevTools
-  */
- a:where([class]) {
-   display: inline-flex;
- }
- 
- /**
-   Курсор-рука при наведении на элемент
-  */
- button,
- label {
-   cursor: pointer;
- }
- 
- /**
-   Приводим к единому цвету svg-элементы
-  */
- [fill] { fill: currentColor }
- [stroke] { stroke: currentColor }
- 
- /**
-   Чиним баг задержки смены цвета при взаимодействии с svg-элементами
-  */
- svg * {
-   transition-property: fill, stroke;
- }
- 
- /**
-   Приведение рамок таблиц в классический 'collapse' вид
-  */
- :where(table) {
-   border-collapse: collapse;
-   border-color: currentColor;
- }
- 
- /**
-   Удаляем все анимации и переходы для людей,
-   которые предпочитают их не использовать
-  */
- @media (prefers-reduced-motion: reduce) {
-   *,
-   ::before,
-   ::after {
-     animation-duration: 0.01ms !important;
-     animation-iteration-count: 1 !important;
-     transition-duration: 0.01ms !important;
-     scroll-behavior: auto !important;
-   }
- }
- a{
-    text-decoration: none;
+Нормализация блочной модели
+*/
+*,
+::before,
+::after {
+ box-sizing: border-box;
 }
 
-:root {
-    --color-header: #FEF7FF;
-    --color-accent: #332D41;
-    --color-border: #65558F;
-    --color-background: #FFFFFF;
-    --color-text: #000000;
-    --color-choice: #CCC2DC;
-    --color-choice-border: #79747E;
-    --color-elements: #E8DEF8;
-    --font-family-accent: 'Archive', Roboto-Regular;
-    --font-family-base: 'Roboto', Roboto-Regular;
-    --transition-duration: 0.3s;
+/**
+ Убираем внутренние отступы слева тегам списков,
+ у которых есть атрибут class
+*/
+:where(ul, ol):where([class]) {
+ padding-left: 0;
+}
+
+/**
+ Убираем внешние отступы body и двум другим тегам,
+ у которых есть атрибут class
+*/
+body,
+:where(blockquote, figure):where([class]) {
+ margin: 0;
+}
+
+/**
+ Убираем внешние отступы вертикали нужным тегам,
+ у которых есть атрибут class
+*/
+:where(
+ h1,
+ h2,
+ h3,
+ h4,
+ h5,
+ h6,
+ p,
+ ul,
+ ol,
+ dl
+):where([class]) {
+ margin-block: 0;
+}
+
+:where(dd[class]) {
+ margin-left: 0;
+}
+
+:where(fieldset[class]) {
+ margin-left: 0;
+ padding: 0;
+ border: none;
+}
+
+/**
+ Убираем стандартный маркер маркированному списку,
+ у которого есть атрибут class
+*/
+:where(ul[class]) {
+ list-style: none;
+}
+
+:where(address[class]) {
+ font-style: normal;
+}
+
+/**
+ Обнуляем вертикальные внешние отступы параграфа,
+ объявляем локальную переменную для внешнего отступа вниз,
+ чтобы избежать взаимодействие с более сложным селектором
+*/
+p {
+ --paragraphMarginBottom: 24px;
+
+ margin-block: 0;
+}
+
+/**
+ Внешний отступ вниз для параграфа без атрибута class,
+ который расположен не последним среди своих соседних элементов
+*/
+p:where(:not([class]):not(:last-child)) {
+ margin-bottom: var(--paragraphMarginBottom);
+}
+
+
+/**
+ Упрощаем работу с изображениями и видео
+*/
+img,
+video {
+ display: block;
+ max-width: 100%;
+ height: auto;
+}
+
+/**
+ Наследуем свойства шрифт для полей ввода
+*/
+input,
+textarea,
+select,
+button {
+ font: inherit;
+}
+
+html {
+ /**
+   Пригодится в большинстве ситуаций
+   (когда, например, нужно будет "прижать" футер к низу сайта)
+  */
+ height: 100%;
+ /**
+   Убираем скачок интерфейса по горизонтали
+   при появлении / исчезновении скроллбара
+  */
+ scrollbar-gutter: stable;
+}
+
+/**
+ Плавный скролл
+*/
+html,
+:has(:target) {
+ scroll-behavior: smooth;
 }
 
 body {
-    background-color: var(--color-header);
+ /**
+   Пригодится в большинстве ситуаций
+   (когда, например, нужно будет "прижать" футер к низу сайта)
+  */
+ min-height: 100%;
+ /**
+   Унифицированный интерлиньяж
+  */
+ line-height: 1.5;
+}
+
+/**
+ Нормализация высоты элемента ссылки при его инспектировании в DevTools
+*/
+a:where([class]) {
+ display: inline-flex;
+}
+
+/**
+ Курсор-рука при наведении на элемент
+*/
+button,
+label {
+ cursor: pointer;
+}
+
+/**
+ Приводим к единому цвету svg-элементы
+*/
+[fill] { fill: currentColor }
+[stroke] { stroke: currentColor }
+
+/**
+ Чиним баг задержки смены цвета при взаимодействии с svg-элементами
+*/
+svg * {
+ transition-property: fill, stroke;
+}
+
+/**
+ Приведение рамок таблиц в классический 'collapse' вид
+*/
+:where(table) {
+ border-collapse: collapse;
+ border-color: currentColor;
+}
+
+/**
+ Удаляем все анимации и переходы для людей,
+ которые предпочитают их не использовать
+*/
+@media (prefers-reduced-motion: reduce) {
+ *,
+ ::before,
+ ::after {
+   animation-duration: 0.01ms !important;
+   animation-iteration-count: 1 !important;
+   transition-duration: 0.01ms !important;
+   scroll-behavior: auto !important;
+ }
+}
+a{
+  text-decoration: none;
+}
+
+:root {
+  --color-header: #FEF7FF;
+  --color-accent: #332D41;
+  --color-border: #65558F;
+  --color-background: #FFFFFF;
+  --color-text: #000000;
+  --color-choice: #CCC2DC;
+  --color-choice-border: #79747E;
+  --color-elements: #E8DEF8;
+  --font-family-accent: 'Archive', Roboto-Regular;
+  --font-family-base: 'Roboto', Roboto-Regular;
+  --transition-duration: 0.3s;
+}
+
+body {
+  background-color: var(--color-header);
 }
 
 .header {
-    height: 9vh;
-    background-color: var(--color-header);
-    display: flex;
-    align-items: center;
+  height: 9vh;
+  background-color: var(--color-header);
+  display: flex;
+  align-items: center;
 }
 
 .header-logo {
-    padding-left: 16px;
+  padding-left: 16px;
 }
 
 .insurance {
-    font-family: var(--font-family-accent);
-    font-size: 36px;
-    color: var(--color-accent);
-    margin-left: 16px;
-    padding-top: 3px;
+  font-family: var(--font-family-accent);
+  font-size: 36px;
+  color: var(--color-accent);
+  margin-left: 16px;
+  padding-top: 3px;
 }
 
 .navigation {
-    font-family: var(--font-family-base);
-    width: 18vw;
-    height: 91vh;
-    margin-top: 9vh;
-    background-color: var(--color-header);
-    color: var(--color-text);
-    transition: width var(--transition-duration) ease;
-    position: fixed;
-    top: 0;
-    left: 0;
+  font-family: var(--font-family-base);
+  width: 18vw;
+  height: 91vh;
+  margin-top: 9vh;
+  background-color: var(--color-header);
+  color: var(--color-text);
+  transition: width var(--transition-duration) ease;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .navigation.collapsed {
-    width: 6vw;
+  width: 6vw;
 }
 
 .toggle-btn {
-    background-color: var(--color-header);
-    color: var(--color-text);
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background-color: var(--color-header);
+  color: var(--color-text);
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .sidebar-content {
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .sidebar-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: var(--color-text);
-    margin: 10px 0;
-    width: 100%;
-    padding: 10px;
-    transition: background-color var(--transition-duration) ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--color-text);
+  margin: 10px 0;
+  width: 100%;
+  padding: 10px;
+  transition: background-color var(--transition-duration) ease;
 }
 
 .sidebar-link:hover {
-    background-color: var(--color-choice);
+  background-color: var(--color-choice);
 }
 
 .sidebar-link img {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
 }
 
 .sidebar-link span {
-    font-size: 16px;
-    font-family: var(--font-family-base);
+  font-size: 16px;
+  font-family: var(--font-family-base);
 }
 
 .navigation.collapsed .sidebar-link span {
-    display: none;
+  display: none;
 }
 
 .content {
-    font-family: var(--font-family-base);
-    background-color: var(--color-background);
-    width: calc(100vw - 20vw);
-    margin-left: 18vw;
-    height: 100px;
-    border-radius: 30px;
-    padding: 10px;
-    text-align: center;
-    transition: margin-left var(--transition-duration) ease, width var(--transition-duration) ease;
-    min-height: 70vh;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: var(--font-family-base);
+  background-color: var(--color-background);
+  width: calc(100vw - 20vw);
+  margin-left: 18vw;
+  height: 100px;
+  border-radius: 30px;
+  padding: 10px;
+  text-align: center;
+  transition: margin-left var(--transition-duration) ease, width var(--transition-duration) ease;
+  min-height: 90vh;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .content.shifted {
-    margin-left: 6vw;
-    width: calc(100vw - 8vw);
+  margin-left: 6vw;
+  width: calc(100vw - 8vw);
 }
 
 .main-section {
-    display: flex;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .section-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 14px;
-    justify-content: space-between;
-    width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .section-link {
-    color: var(--color-text);
-    display: inline-flex;
-    font-weight: 400;
-    font-size: 16px;
-    text-decoration: none;
-    white-space: nowrap;
+  color: var(--color-text);
+  display: inline-flex;
+  font-weight: 400;
+  font-size: 16px;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 .section-link:hover {
-    color: var(--color-border);
+  color: var(--color-border);
 }
 
 .calendar-section {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: var(--color-elements);
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 25vw;
-    margin-left: auto;
-    margin-right: auto;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: var(--color-elements);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 25vw;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .calendar-title {
-    font-size: 20px;
-    font-weight: bold;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .calendar-date input {
-    border: none;
-    background-color: transparent;
-    font-size: 16px;
-    text-align: center;
-    width: 100px;
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  text-align: center;
+  width: 200px; /* Увеличиваем ширину */
+  white-space: normal; /* Добавляем это свойство */
+  word-wrap: break-word; /* Добавляем это свойство */
 }
 
 .calendar-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .calendar-month {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .calendar-month button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 20px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
 }
 
 .calendar-days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
-    margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 .calendar-days .day {
-    text-align: center;
-    font-size: 14px;
+  text-align: center;
+  font-size: 14px;
 }
 
 .calendar-dates {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
 }
 
 .calendar-dates .date {
-    text-align: center;
-    font-size: 14px;
-    cursor: pointer;
-    padding: 5px;
-    border-radius: 5px;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .calendar-dates .date:hover {
-    background-color: var(--color-choice);
+  background-color: var(--color-choice);
 }
 
 .calendar-dates .date.selected {
-    background-color: var(--color-accent);
-    color: white;
+  background-color: var(--color-accent);
+  color: white;
 }
 
 .calendar-dates .date.start-date,
 .calendar-dates .date.end-date {
-    background-color: var(--color-accent);
-    color: white;
+  background-color: var(--color-accent);
+  color: white;
 }
 
 .calendar-dates .date.in-range {
-    background-color: var(--color-choice);
+  background-color: var(--color-choice);
 }
