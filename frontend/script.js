@@ -136,119 +136,124 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const newArticleBtn = document.getElementById('newArticleBtn');
     const newArticleForm = document.getElementById('newArticleForm');
-    const newArticleInput = document.getElementById('newArticleInput');
-    const createArticleBtn = document.getElementById('createArticleBtn');
+    const categoryIcons = document.querySelectorAll('input[name="category"]');
+    const existingTemplates = document.getElementById('existingTemplates');
+    const createNewElementBtn = document.getElementById('createNewElementBtn');
+    const newElementForm = document.getElementById('newElementForm');
+    const newElementName = document.getElementById('newElementName');
+    const newElementType = document.getElementById('newElementType');
+    const newElementDependency = document.getElementById('newElementDependency');
+    const saveNewElementBtn = document.getElementById('saveNewElementBtn');
     const draggableItems = document.getElementById('draggableItems');
-    const insuranceTypeSelect = document.getElementById('insuranceType');
-    const dynamicFields = document.getElementById('dynamicFields');
 
-    const fieldsConfig = {
+    const templates = {
         medical: [
-            { label: 'Номер полиса', type: 'text' },
-            { label: 'Дата начала', type: 'date' },
-            { label: 'Дата окончания', type: 'date' }
+            { name: 'Полис человека', type: 'text' },
+            { name: 'Дата начала', type: 'date' },
+            { name: 'Дата окончания', type: 'date' }
         ],
         car: [
-            { label: 'Номер автомобиля', type: 'text' },
-            { label: 'Марка', type: 'text' },
-            { label: 'Модель', type: 'text' }
+            { name: 'Номер автомобиля', type: 'text' },
+            { name: 'Марка', type: 'text' },
+            { name: 'Модель', type: 'text' }
         ],
-        property: [
-            { label: 'Адрес', type: 'text' },
-            { label: 'Тип имущества', type: 'text' },
-            { label: 'Стоимость', type: 'number' }
+        person: [
+            { name: 'ФИО', type: 'text' },
+            { name: 'Регион проживания', type: 'text' }
+        ],
+        house: [
+            { name: 'Адрес', type: 'text' },
+            { name: 'Владелец', type: 'text' }
         ]
+        // Добавьте другие категории и шаблоны по аналогии
     };
 
-    function renderFields(type) {
-        dynamicFields.innerHTML = ''; // Очищаем контейнер
+    function renderTemplates(category) {
+        existingTemplates.innerHTML = '';
+        templates[category].forEach(template => {
+            const templateElement = document.createElement('div');
+            templateElement.className = 'template';
+            templateElement.textContent = template.name;
+            templateElement.addEventListener('click', () => addTemplateToMain(template));
+            existingTemplates.appendChild(templateElement);
+        });
+    }
 
-        const fields = fieldsConfig[type];
-        if (fields) {
-            fields.forEach(field => {
-                const div = document.createElement('div');
-                const label = document.createElement('label');
-                label.textContent = field.label;
-                const input = document.createElement('input');
-                input.type = field.type;
-                input.name = field.label.toLowerCase().replace(' ', '_');
+    function addTemplateToMain(template) {
+        const newItem = document.createElement('div');
+        newItem.className = 'draggable-item';
+        newItem.innerHTML = `
+            <p><b>${template.name}</b></p>
+            ${getInputField(template.type)}
+        `;
+        draggableItems.appendChild(newItem);
 
-                div.appendChild(label);
-                div.appendChild(input);
-                dynamicFields.appendChild(div);
-            });
+        // Настройка перетаскивания с помощью interact.js
+        interact(newItem).draggable({
+            inertia: true,
+            modifiers: [
+                interact.modifiers.restrictRect({
+                    restriction: 'main', // Ограничиваем перетаскивание областью main
+                    endOnly: true
+                })
+            ],
+            listeners: {
+                move: dragMoveListener
+            }
+        });
+    }
+
+    function getInputField(type) {
+        switch (type) {
+            case 'text':
+                return '<input type="text" placeholder="Введите текст">';
+            case 'number':
+                return '<input type="number" placeholder="Введите число">';
+            case 'date':
+                return '<input type="date">';
+            default:
+                return '';
         }
     }
 
-    insuranceTypeSelect.addEventListener('change', function() {
-        const selectedType = insuranceTypeSelect.value;
-        renderFields(selectedType);
+    categoryIcons.forEach(icon => {
+        icon.addEventListener('change', function() {
+            renderTemplates(this.value);
+        });
     });
-
-    // Инициализация полей при загрузке страницы
-    renderFields(insuranceTypeSelect.value);
 
     newArticleBtn.addEventListener('click', function() {
         newArticleForm.style.display = 'block';
+        renderTemplates(document.querySelector('input[name="category"]:checked').value);
     });
 
-    createArticleBtn.addEventListener('click', function(event) {
-        event.preventDefault(); // Предотвращаем отправку формы
+    createNewElementBtn.addEventListener('click', function() {
+        newElementForm.style.display = 'block';
+    });
 
-        const newItemText = newArticleInput.value.trim();
-        const selectedType = insuranceTypeSelect.value;
-        const fields = fieldsConfig[selectedType];
-        const fieldValues = {};
+    saveNewElementBtn.addEventListener('click', function() {
+        const name = newElementName.value.trim();
+        const type = newElementType.value;
+        const dependency = newElementDependency.value;
 
-        fields.forEach(field => {
-            const input = document.querySelector(`input[name="${field.label.toLowerCase().replace(' ', '_')}"]`);
-            fieldValues[field.label] = input.value;
-        });
-
-        // Проверяем, что поле newArticleInput заполнено
-        if (newItemText === '') {
+        if (name === '') {
             alert('Пожалуйста, введите название элемента.');
             return;
         }
 
-        if (newItemText || Object.keys(fieldValues).length > 0) {
-            const newItem = document.createElement('div');
-            newItem.className = 'draggable-item';
-            newItem.innerHTML = `
-                <p>Созданный элемент: ${newItemText}</p>
-                <p>Тип страхования: ${selectedType}</p>
-                <p>Значения полей: ${JSON.stringify(fieldValues)}</p>
-            `;
+        const newTemplate = { name, type, dependency };
+        const selectedCategory = document.querySelector('input[name="category"]:checked').value;
+        templates[selectedCategory].push(newTemplate);
 
-            // Изменяем стиль параграфов
-            const paragraphs = newItem.querySelectorAll('p');
-            paragraphs.forEach(paragraph => {
-                paragraph.style.color = 'var(--color-text)';
-                paragraph.style.fontSize = '20px';
-                paragraph.style.fontWeight = "bold";
-                paragraph.style.marginBottom = '5px';
-            });
-
-            draggableItems.appendChild(newItem);
-
-            newArticleInput.value = '';
-            newArticleForm.style.display = 'none';
-
-            // Настройка перетаскивания с помощью interact.js
-            interact(newItem).draggable({
-                inertia: true,
-                modifiers: [
-                    interact.modifiers.restrictRect({
-                        restriction: 'main', // Ограничиваем перетаскивание областью main
-                        endOnly: true
-                    })
-                ],
-                listeners: {
-                    move: dragMoveListener
-                }
-            });
-        }
+        renderTemplates(selectedCategory);
+        newElementForm.style.display = 'none';
+        newElementName.value = '';
+        newElementType.value = 'text';
+        newElementDependency.value = '';
     });
+
+    // Инициализация шаблонов для начальной категории
+    renderTemplates('medical');
 
     const draggableWindow = document.getElementById('draggableWindow');
     const windowHeader = document.getElementById('windowHeader');

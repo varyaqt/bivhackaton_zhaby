@@ -79,26 +79,56 @@
         <button class="new-article" id="newArticleBtn">
             Добавить элемент
         </button>
-        <div class="new-article-form" id="newArticleForm">
+        <div class="new-article-form" id="newArticleForm" style="display: none;">
             <div class="form-header">
                 <h3>Добавление элемента</h3>
             </div>
             <div class="form-content">
                 <div class="form-section">
-                    <label for="newArticleInput">Создать новый элемент</label>
-                    <input type="text" id="newArticleInput" placeholder="Название элемента" required>
+                    <label>Выберите категорию:</label>
+                    <div class="category-icons">
+                        <label>
+                            <input type="radio" name="category" value="medical" checked>
+                            <img src="/frontend/icons/type_medicine.svg" alt="Медицинское обслуживание">
+                        </label>
+                        <label>
+                            <input type="radio" name="category" value="car">
+                            <img src="/frontend/icons/type_car.svg" alt="Машина">
+                        </label>
+                        <label>
+                            <input type="radio" name="category" value="person">
+                            <img src="/frontend/icons/type_person.svg" alt="Человек">
+                        </label>
+                        <label>
+                            <input type="radio" name="category" value="house">
+                            <img src="/frontend/icons/type_apartment.svg" alt="Жильё">
+                        </label>
+                    </div>
+                </div>
+                <div class="form-section" id="existingTemplates">
+                    <!-- Существующие шаблоны будут отображаться здесь -->
                 </div>
                 <div class="form-section">
-                    <label for="insuranceType">Выберите тип страхования:</label>
-                    <select id="insuranceType">
-                        <option value="medical">Медицинское страхование</option>
-                        <option value="car">Автомобильное страхование</option>
-                        <option value="property">Страхование имущества</option>
-                    </select>
+                    <button id="createNewElementBtn">Создать новый элемент</button>
                 </div>
-                <div class="form-section" id="dynamicFields"></div>
+                <div class="form-section" id="newElementForm" style="display: none;">
+                    <label for="newElementName">Название элемента:</label>
+                    <input type="text" id="newElementName" placeholder="Название элемента" required>
+                    <label for="newElementType">Тип данных:</label>
+                    <select id="newElementType">
+                        <option value="text">Текст</option>
+                        <option value="number">Число</option>
+                        <option value="date">Дата</option>
+                        <!-- Добавьте другие типы данных по аналогии -->
+                    </select>
+                    <label for="newElementDependency">Зависимость от элемента:</label>
+                    <select id="newElementDependency">
+                        <option value="">Нет зависимости</option>
+                        <!-- Зависимости будут заполняться динамически -->
+                    </select>
+                    <button id="saveNewElementBtn">Сохранить</button>
+                </div>
             </div>
-            <button id="createArticleBtn">Создать</button>
         </div>
         <div class="draggable-items" id="draggableItems"></div>
     </main>
