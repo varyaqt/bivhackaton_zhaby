@@ -126,4 +126,65 @@ document.addEventListener('DOMContentLoaded', function() {
         target.setAttribute('data-x', x);
         target.setAttribute('data-y', y);
     }
+    const newArticleBtn = document.getElementById('newArticleBtn');
+    const newArticleForm = document.getElementById('newArticleForm');
+    const newArticleInput = document.getElementById('newArticleInput');
+    const previewInput = document.getElementById('previewInput');
+    const insurancePeriodInput = document.getElementById('insurancePeriodInput');
+    const periodInput = document.getElementById('periodInput');
+    const createArticleBtn = document.getElementById('createArticleBtn');
+    const draggableItems = document.getElementById('draggableItems');
+
+    newArticleBtn.addEventListener('click', function() {
+        newArticleForm.style.display = 'block';
+    });
+
+    createArticleBtn.addEventListener('click', function() {
+        const newItemText = newArticleInput.value.trim();
+        const previewText = previewInput.value.trim();
+        const insurancePeriodText = insurancePeriodInput.value.trim();
+        const periodText = periodInput.value.trim();
+
+        if (newItemText || previewText || insurancePeriodText || periodText) {
+            const newItem = document.createElement('div');
+            newItem.className = 'draggable-item';
+            newItem.innerHTML = `
+                <p>Созданный элемент: ${newItemText}</p>
+                <p>Preview: ${previewText}</p>
+                <p>Сроки страхования: ${insurancePeriodText}</p>
+                <p>Период: ${periodText}</p>
+            `;
+            draggableItems.appendChild(newItem);
+
+            newArticleInput.value = '';
+            previewInput.value = '';
+            insurancePeriodInput.value = '';
+            periodInput.value = '';
+            newArticleForm.style.display = 'none';
+
+            // Настройка перетаскивания с помощью interact.js
+            interact(newItem).draggable({
+                inertia: true,
+                modifiers: [
+                    interact.modifiers.restrictRect({
+                        restriction: 'main', // Ограничиваем перетаскивание областью main
+                        endOnly: true
+                    })
+                ],
+                listeners: {
+                    move: dragMoveListener
+                }
+            });
+        }
+    });
+
+    function dragMoveListener(event) {
+        const target = event.target;
+        const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+        const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+        target.style.transform = `translate(${x}px, ${y}px)`;
+        target.setAttribute('data-x', x);
+        target.setAttribute('data-y', y);
+    }
 });

@@ -69,10 +69,36 @@
                 <div class="calendar-dates" id="calendarDates"></div>
             </div>
         </div>
+        <button class="new-article" id="newArticleBtn">
+            Добавить элемент
+        </button>
+        <div class="new-article-form" id="newArticleForm">
+            <div class="form-header">
+                <h3>Добавление элемента</h3>
+            </div>
+            <div class="form-content">
+                <div class="form-section">
+                    <label for="newArticleInput">Создать новый элемент</label>
+                    <input type="text" id="newArticleInput" placeholder="Новый элемент">
+                </div>
+                <div class="form-section">
+                    <label for="previewInput">Preview</label>
+                    <input type="text" id="previewInput" placeholder="Preview">
+                </div>
+                <div class="form-section">
+                    <label for="insurancePeriodInput">Сроки страхования</label>
+                    <input type="text" id="insurancePeriodInput" placeholder="Сроки страхования">
+                </div>
+                <div class="form-section">
+                    <label for="periodInput">Период</label>
+                    <input type="text" id="periodInput" placeholder="Период">
+                </div>
+            </div>
+            <button id="createArticleBtn">Создать</button>
+        </div>
+        <div class="draggable-items" id="draggableItems"></div>
     </main>
-    <button class="new-article">
-        Добавить элемент
-    </button>
+    
 
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
