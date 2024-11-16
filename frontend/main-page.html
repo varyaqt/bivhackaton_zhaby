@@ -76,6 +76,31 @@
             </div>
         </div>
         
+        <div class="currency-widget draggable">
+            <div class="widget-header">
+                <div class="widget-title">Валюта страховой суммы</div>
+            </div>
+            <div class="widget-body">
+                <select id="currencySelect">
+                    <option value="eur">Евро</option>
+                    <option value="rub">Российский рубль</option>
+                    <option value="usd">Доллар США</option>
+                    <option value="cny">Юань</option>
+                </select>
+                <button id="dependencyBtn">Зависимости</button>
+            </div>
+        </div>
+
+        <div class="dependency-window" id="dependencyWindow" style="display: none;">
+            <div class="window-header">
+                <div class="window-title">Зависимости</div>
+                <button id="closeDependencyBtn">Закрыть</button>
+            </div>
+            <div class="window-body">
+                <!-- Здесь будут отображаться зависимости -->
+            </div>
+        </div>
+        
         <button class="new-article" id="newArticleBtn">
             Добавить элемент
         </button>

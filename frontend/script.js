@@ -165,7 +165,6 @@ document.addEventListener('DOMContentLoaded', function() {
             { name: 'Адрес', type: 'text' },
             { name: 'Владелец', type: 'text' }
         ]
-        // Добавьте другие категории и шаблоны по аналогии
     };
 
     function renderTemplates(category) {
@@ -254,6 +253,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Инициализация шаблонов для начальной категории
     renderTemplates('medical');
+
+    const dependencyBtn = document.getElementById('dependencyBtn');
+    const dependencyWindow = document.getElementById('dependencyWindow');
+    const closeDependencyBtn = document.getElementById('closeDependencyBtn');
+
+    dependencyBtn.addEventListener('click', function() {
+        dependencyWindow.style.display = 'block';
+    });
+
+    closeDependencyBtn.addEventListener('click', function() {
+        dependencyWindow.style.display = 'none';
+    });
 
     const draggableWindow = document.getElementById('draggableWindow');
     const windowHeader = document.getElementById('windowHeader');
