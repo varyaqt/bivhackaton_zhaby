@@ -269,11 +269,11 @@ body {
   background-color: var(--color-surface);
   color: var(--color-text);
   border: none;
-  padding: 10px;
+  padding: 24px;
   cursor: pointer;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
 }
 
@@ -287,7 +287,7 @@ body {
 .sidebar-link {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   text-decoration: none;
   color: var(--color-text);
   margin: 10px 0;
@@ -308,10 +308,12 @@ body {
 .sidebar-link span {
   font-size: 16px;
   font-family: var(--font-family-base);
+  margin-left: 10px; /* Добавляем отступ между иконкой и текстом */
+  white-space: nowrap; /* Предотвращаем перенос текста */
 }
 
 .navigation.collapsed .sidebar-link span {
-  display: none;
+  display: none; /* Скрываем текст, когда меню свернуто */
 }
 
 .content {
