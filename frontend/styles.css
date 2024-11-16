@@ -601,31 +601,36 @@ select[multiple] option:checked {
   cursor: pointer;
   margin: 5px;
   border: 2px solid transparent;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .category-icons input[type="radio"]:checked + img {
-  border-color: #007bff; /* Цвет рамки при выборе */
+  border-color: var(--color-outline); /* Цвет рамки при выборе */
 }
 
 .draggable-items{
   color: var(--color-text);
 }
 
-/* Добавьте стили для скрытия радиокнопок и выделения картинок при выборе */
 .category-icons input[type="radio"] {
   display: none;
+}
+.category-icons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  
 }
 
 .category-icons img {
   cursor: pointer;
   margin: 5px;
   border: 2px solid transparent;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .category-icons input[type="radio"]:checked + img {
-  border-color: #007bff; /* Цвет рамки при выборе */
+  border-color: var(--color-outline); /* Цвет рамки при выборе */
 }
 
 /* Стили для новых блоков */
@@ -635,7 +640,7 @@ select[multiple] option:checked {
   font-size: 20px;
   padding: 10px;
   margin: 10px;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
