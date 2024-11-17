@@ -1,0 +1,884 @@
+@font-face {
+  font-family: 'Archive';
+  src: url(/frontend/fonts/Archive.woff2) format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url(/frontend/fonts/Roboto-Regular.woff2) format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/**
+Нормализация блочной модели
+*/
+*,
+::before,
+::after {
+ box-sizing: border-box;
+}
+
+/**
+ Убираем внутренние отступы слева тегам списков,
+ у которых есть атрибут class
+*/
+:where(ul, ol):where([class]) {
+ padding-left: 0;
+}
+
+/**
+ Убираем внешние отступы body и двум другим тегам,
+ у которых есть атрибут class
+*/
+body,
+:where(blockquote, figure):where([class]) {
+ margin: 0;
+}
+
+/**
+ Убираем внешние отступы вертикали нужным тегам,
+ у которых есть атрибут class
+*/
+:where(
+ h1,
+ h2,
+ h3,
+ h4,
+ h5,
+ h6,
+ p,
+ ul,
+ ol,
+ dl
+):where([class]) {
+ margin-block: 0;
+}
+
+:where(dd[class]) {
+ margin-left: 0;
+}
+
+:where(fieldset[class]) {
+ margin-left: 0;
+ padding: 0;
+ border: none;
+}
+
+/**
+ Убираем стандартный маркер маркированному списку,
+ у которого есть атрибут class
+*/
+:where(ul[class]) {
+ list-style: none;
+}
+
+:where(address[class]) {
+ font-style: normal;
+}
+
+/**
+ Обнуляем вертикальные внешние отступы параграфа,
+ объявляем локальную переменную для внешнего отступа вниз,
+ чтобы избежать взаимодействие с более сложным селектором
+*/
+p {
+ --paragraphMarginBottom: 24px;
+
+ margin-block: 0;
+}
+
+/**
+ Внешний отступ вниз для параграфа без атрибута class,
+ который расположен не последним среди своих соседних элементов
+*/
+p:where(:not([class]):not(:last-child)) {
+ margin-bottom: var(--paragraphMarginBottom);
+}
+
+
+/**
+ Упрощаем работу с изображениями и видео
+*/
+img,
+video {
+ display: block;
+ max-width: 100%;
+ height: auto;
+}
+
+/**
+ Наследуем свойства шрифт для полей ввода
+*/
+input,
+textarea,
+select,
+button {
+ font: inherit;
+}
+
+html {
+ /**
+   Пригодится в большинстве ситуаций
+   (когда, например, нужно будет "прижать" футер к низу сайта)
+  */
+ height: 100%;
+ /**
+   Убираем скачок интерфейса по горизонтали
+   при появлении / исчезновении скроллбара
+  */
+ scrollbar-gutter: stable;
+}
+
+/**
+ Плавный скролл
+*/
+html,
+:has(:target) {
+ scroll-behavior: smooth;
+}
+
+body {
+ /**
+   Пригодится в большинстве ситуаций
+   (когда, например, нужно будет "прижать" футер к низу сайта)
+  */
+ min-height: 100%;
+ /**
+   Унифицированный интерлиньяж
+  */
+ line-height: 1.5;
+}
+
+/**
+ Нормализация высоты элемента ссылки при его инспектировании в DevTools
+*/
+a:where([class]) {
+ display: inline-flex;
+}
+
+/**
+ Курсор-рука при наведении на элемент
+*/
+button,
+label {
+ cursor: pointer;
+}
+
+/**
+ Приводим к единому цвету svg-элементы
+*/
+[fill] { fill: currentColor }
+[stroke] { stroke: currentColor }
+
+/**
+ Чиним баг задержки смены цвета при взаимодействии с svg-элементами
+*/
+svg * {
+ transition-property: fill, stroke;
+}
+
+/**
+ Приведение рамок таблиц в классический 'collapse' вид
+*/
+:where(table) {
+ border-collapse: collapse;
+ border-color: currentColor;
+}
+
+/**
+ Удаляем все анимации и переходы для людей,
+ которые предпочитают их не использовать
+*/
+@media (prefers-reduced-motion: reduce) {
+ *,
+ ::before,
+ ::after {
+   animation-duration: 0.01ms !important;
+   animation-iteration-count: 1 !important;
+   transition-duration: 0.01ms !important;
+   scroll-behavior: auto !important;
+ }
+}
+a{
+  text-decoration: none;
+}
+
+:root {
+  --color-main: #3386F1;
+  --color-secondary:#87BFFF;
+  --color-sub-secondary: #CEE5FF;
+  --color-outline: #0B38A1;
+  --color-surface: #F1F8FF;
+  --color-accent: #0C2766;
+  --color-text: #000000;
+  --color-background: #FFFFFF;
+
+  --font-family-accent: 'Archive', Roboto-Regular;
+  --font-family-base: 'Roboto', Roboto-Regular;
+  --transition-duration: 0.3s;
+}
+
+body {
+  background-color: var( --color-surface);
+  max-height: 100vw;
+}
+
+.header {
+  height: 9vh;
+  background-color: var( --color-surface);
+  display: flex;
+  align-items: center;
+}
+
+.header-logo {
+  padding-left: 16px;
+}
+
+.insurance {
+  font-family: var(--font-family-accent);
+  font-size: 33px;
+  color: var(--color-accent);
+  margin-left: 16px;
+  padding-top: 4px;
+}
+
+.navigation {
+  font-family: var(--font-family-base);
+  width: 18vw;
+  height: 91vh;
+  margin-top: 9vh;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  transition: width var(--transition-duration) ease;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.navigation.collapsed {
+  width: 6vw;
+}
+
+.toggle-btn {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: none;
+  padding: 24px;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.sidebar-content {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  text-decoration: none;
+  color: var(--color-text);
+  margin: 10px 0;
+  width: 100%;
+  padding: 10px;
+  transition: background-color var(--transition-duration) ease;
+}
+
+.sidebar-link:hover {
+  background-color: var(--color-secondary);
+}
+
+.sidebar-link img {
+  width: 24px;
+  height: 24px;
+}
+
+.sidebar-link span {
+  font-size: 16px;
+  font-family: var(--font-family-base);
+  margin-left: 10px; /* Добавляем отступ между иконкой и текстом */
+  white-space: nowrap; /* Предотвращаем перенос текста */
+}
+
+.navigation.collapsed .sidebar-link span {
+  display: none; /* Скрываем текст, когда меню свернуто */
+}
+
+.content {
+  font-family: var(--font-family-base);
+  background-color: var(--color-background);
+  width: calc(100vw - 20vw);
+  margin-left: 18vw;
+  height: 100px;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  transition: margin-left var(--transition-duration) ease, width var(--transition-duration) ease;
+  min-height: 90vh;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.content.shifted {
+  margin-left: 6vw;
+  width: calc(100vw - 8vw);
+}
+
+
+.calendar-section {
+  padding: 20px;
+  background-color: var(--color-sub-secondary);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 25vw;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  margin-top: 40px; /* Добавляем отступ сверху */
+}
+
+.calendar-header {
+  display: flex;
+  flex-direction: column; /* Изменяем направление flexbox на column */
+  align-items: center; /* Выравниваем элементы по центру */
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.calendar-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px; /* Добавляем отступ снизу */
+}
+
+.calendar-date input {
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  text-align: center;
+  width: 200px; /* Увеличиваем ширину */
+  white-space: normal; /* Добавляем это свойство */
+  word-wrap: break-word; /* Добавляем это свойство */
+}
+
+.calendar-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 0;
+}
+
+.calendar-month {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.calendar-month button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 18px;
+  margin-bottom: 10px;
+}
+
+.calendar-days .day {
+  text-align: center;
+  font-size: 14px;
+}
+
+.calendar-dates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.calendar-dates .date {
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.calendar-dates .date:hover {
+  background-color: var(--color-secondary);
+}
+
+.calendar-dates .date.selected {
+  background-color: var(--color-main);
+  color: white;
+}
+
+.calendar-dates .date.start-date,
+.calendar-dates .date.end-date {
+  background-color: var(--color-main);
+  color: white;
+}
+
+.calendar-dates .date.in-range {
+  background-color: var(--color-secondary);
+}
+
+.new-article {
+  display: inline-block;
+  align-items: center;
+  font-family: var(--font-family-base);
+  color: var(--color-accent);
+  position: fixed;
+  background-color: var(--color-secondary);
+  border: none;
+  font-size: 16px;
+  z-index: 100;
+  right: 40px; /* Расстояние от правого края */
+  bottom: 40px; /* Расстояние от нижнего края */
+  padding: 10px; /* Дополнительный отступ внутри элемента */
+  border-radius: 10px; /* Закругление углов */
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.new-article::before{
+  content: "";
+  background-image: url(/frontend/icons/pen.svg);
+  width: 24px;
+  height: 24px;
+  background-size: cover;
+  display: inline-block;
+  vertical-align: middle; /* Опустить стрелочку на уровень текста */
+  transition: background-image 0.3s ease;
+
+}
+
+.new-article:hover {
+  color: var(--color-background);
+  background-color: var(--color-main);
+}
+
+.new-article:hover::before{
+  background-image: url(/frontend/icons/pen-hover.svg);
+}
+
+.new-article-form {
+  display: none;
+  position: fixed;
+  right: 40px;
+  bottom: 100px;
+  background-color: var(--color-background);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 101;
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.form-header {
+  margin-bottom: 20px;
+}
+
+.form-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.form-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-section {
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.form-section label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  
+  border-radius: 10px;
+}
+
+.form-section input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+}
+
+.new-article-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--color-main);
+  color: var(--color-background);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.new-article-form button:hover {
+  background-color: var(--color-secondary);
+}
+.draggable-items {
+  margin-top: 20px;
+  
+  border-radius: 10px;
+}
+
+.draggable-item {
+  background-color: var(--color-sub-secondary);
+  color: var(--color-background);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  cursor: move;
+  max-width: 300px; /* Ограничиваем максимальную ширину */
+  width: 100%; /* Заполняем доступное пространство */
+}
+
+.draggable-window {
+  width: 300px;
+  background-color: var(--color-sub-secondary);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  user-select: none;
+  border: none;
+  border-radius: 10px;
+  max-width: 300px; /* Ограничиваем максимальную ширину */
+  width: 100%; /* Заполняем доступное пространство */
+}
+
+select[multiple] {
+  height: auto; /* Автоматическая высота для отображения всех опций */
+  padding: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-size: 16px;
+  font-family: var(--font-family-base);
+  margin-bottom: 20px;
+  max-width: 300px; /* Ограничиваем максимальную ширину */
+  width: 100%; /* Заполняем доступное пространство */
+}
+
+select[multiple] option {
+  padding: 5px;
+  
+  border-radius: 10px;
+}
+
+select[multiple] option:checked {
+  background-color: var(--color-main);
+  color: var(--color-background);
+  
+  border-radius: 10px;
+}
+
+/* Добавьте стили для скрытия радиокнопок и выделения картинок при выборе */
+.category-icons input[type="radio"] {
+  display: none;
+}
+
+.category-icons img {
+  cursor: pointer;
+  margin: 5px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+}
+
+.category-icons input[type="radio"]:checked + img {
+  border-color: var(--color-outline); /* Цвет рамки при выборе */
+}
+
+
+.category-icons input[type="radio"] {
+  display: none;
+}
+.category-icons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  
+}
+
+.category-icons img {
+  cursor: pointer;
+  margin: 5px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+}
+
+.category-icons input[type="radio"]:checked + img {
+  border-color: var(--color-outline); /* Цвет рамки при выборе */
+}
+
+/* Стили для новых блоков */
+.draggable-item {
+  background-color:var(--color-sub-secondary); 
+  color: var(--color-text);
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.draggable-item p {
+  margin: 5px 0;
+}
+
+.draggable-item input {
+  width: 100%;
+  padding: 5px;
+  margin-top: 5px;
+  border: 1px solid var(--color-outline);
+  border-radius: 3px;
+}
+
+.currency-widget {
+  width: 30vw;
+  background-color: var(--color-sub-secondary);
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  font-size: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.currency-widget .widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.currency-widget .widget-title {
+  font-weight: bold;
+}
+
+.currency-widget .widget-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.currency-widget select {
+  width: 60%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.currency-widget button {
+  display: inline-block;
+  align-items: center;
+  font-family: var(--font-family-base);
+  color: var(--color-accent);
+  background-color: var(--color-secondary);
+  border: none;
+  font-size: 16px;
+  z-index: 100;
+  padding: 10px; /* Дополнительный отступ внутри элемента */
+  border-radius: 10px; /* Закругление углов */
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.currency-widget button::before{
+  content: "";
+  background-image: url(/frontend/icons/pen.svg);
+  width: 24px;
+  height: 24px;
+  background-size: cover;
+  display: inline-block;
+  vertical-align: middle; /* Опустить стрелочку на уровень текста */
+  transition: background-image 0.3s ease;
+
+}
+
+.currency-widget button:hover {
+  color: var(--color-background);
+  background-color: var(--color-main);
+}
+
+
+.currency-widget button:hover::before{
+  background-image: url(/frontend/icons/pen-hover.svg);
+}
+
+
+
+.organization-widget {
+  width: 30vw;
+  background-color: var(--color-sub-secondary);
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  font-size: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.organization-widget .widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.organization-widget .widget-title {
+  font-weight: bold;
+}
+
+.organization-widget .widget-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.organization-widget select {
+  width: 60%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.organization-widget button {
+  display: inline-block;
+  align-items: center;
+  font-family: var(--font-family-base);
+  color: var(--color-accent);
+  background-color: var(--color-secondary);
+  border: none;
+  font-size: 16px;
+  z-index: 100;
+  padding: 10px; /* Дополнительный отступ внутри элемента */
+  border-radius: 10px; /* Закругление углов */
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.organization-widget button::before{
+  content: "";
+  background-image: url(/frontend/icons/pen.svg);
+  width: 24px;
+  height: 24px;
+  background-size: cover;
+  display: inline-block;
+  vertical-align: middle; /* Опустить стрелочку на уровень текста */
+  transition: background-image 0.3s ease;
+
+}
+
+.organization-widget button:hover {
+  color: var(--color-background);
+  background-color: var(--color-main);
+}
+
+
+.organization-widget button:hover::before{
+  background-image: url(/frontend/icons/pen-hover.svg);
+}
+
+
+
+/* Стили для окна зависимостей */
+.dependency-window {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.dependency-window .window-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.dependency-window .window-title {
+  font-weight: bold;
+}
+
+.dependency-window .window-body {
+  margin-top: 10px;
+}
+
+.dependency-window button {
+  padding: 5px 10px;
+  border: none;
+  color: var(--color-accent);
+  background-color: var(--color-secondary);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.dependency-window button:hover {
+  color: var(--color-background);
+  background-color: var(--color-main);
+}
+
+.dependency-editor {
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.dependency-editor label {
+  display: block;
+  margin-bottom: 5px;
+  border-radius: 10px;
+}
+
+.dependency-editor select {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.dependency-list .dependency-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: var(--color-sub-secondary);
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
