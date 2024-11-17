@@ -225,6 +225,7 @@ a{
 
 body {
   background-color: var( --color-surface);
+  max-height: 100vw;
 }
 
 .header {
@@ -511,12 +512,15 @@ body {
 
 .form-section {
   margin-bottom: 20px;
+  border-radius: 10px;
 }
 
 .form-section label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
+  
+  border-radius: 10px;
 }
 
 .form-section input {
@@ -541,6 +545,8 @@ body {
 }
 .draggable-items {
   margin-top: 20px;
+  
+  border-radius: 10px;
 }
 
 .draggable-item {
@@ -584,11 +590,15 @@ select[multiple] {
 
 select[multiple] option {
   padding: 5px;
+  
+  border-radius: 10px;
 }
 
 select[multiple] option:checked {
   background-color: var(--color-main);
   color: var(--color-background);
+  
+  border-radius: 10px;
 }
 
 /* Добавьте стили для скрытия радиокнопок и выделения картинок при выборе */
@@ -634,6 +644,7 @@ select[multiple] option:checked {
   background-color:var(--color-sub-secondary); 
   color: var(--color-text);
   font-size: 20px;
+  font-weight: bold;
   padding: 10px;
   margin: 10px;
   border-radius: 10px;
@@ -809,7 +820,7 @@ select[multiple] option:checked {
   background-color: white;
   border: 1px solid #ccc;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   z-index: 1000;
 }
@@ -835,7 +846,7 @@ select[multiple] option:checked {
   border: none;
   color: var(--color-accent);
   background-color: var(--color-secondary);
-  border-radius: 3px;
+  border-radius: 10px;
   cursor: pointer;
 }
 
@@ -866,7 +877,8 @@ select[multiple] option:checked {
 .dependency-list .dependency-item {
   margin-bottom: 10px;
   padding: 10px;
-  background-color: #f0f0f0;
+  background-color: var(--color-sub-secondary);
   border: 1px solid #ccc;
   border-radius: 10px;
 }
+
