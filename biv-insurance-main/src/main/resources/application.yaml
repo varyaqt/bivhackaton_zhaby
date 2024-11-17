@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    main:
+      type: com.zaxxer.hikari.HikariDataSource
+      url: jdbc:postgresql://localhost:5433/insurance?currentSchema=insurance
+      driver-class-name: org.postgresql.Driver
+      username: user
+      password: password
+      hikari:
+        schema: insurance
+    hikari:
+      schema: insurance
+  application:
+    name: frog-insurance
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: validate
+        jdbc:
+          batch_size: 20
+  sql:
+    init:
+      continue-on-error: true
+
+server:
+  port: 8082
+  servlet:
+    context-path: /
+  tomcat:
+    basedir: /tmp/tomcat
