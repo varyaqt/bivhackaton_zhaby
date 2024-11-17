@@ -16,7 +16,7 @@ spring:
     properties:
       hibernate:
         hbm2ddl:
-          auto: validate
+          auto: update
         jdbc:
           batch_size: 20
   sql:

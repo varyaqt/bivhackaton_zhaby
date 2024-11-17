@@ -24,7 +24,7 @@ class PropertyController(
     private val objectMapper: ObjectMapper,
 ) : PropertyApi {
     override fun createProperty(insuranceId: UUID, propertyDto: PropertyDto?): ResponseEntity<UUID> {
-        val insurance = insuranceRepository
+        var insurance = insuranceRepository
             .findById(insuranceId)
             .getOrElse {
                 throw NotFoundException(msg = "insurance with id [$insuranceId] not found")
@@ -42,6 +42,10 @@ class PropertyController(
                 insurance = insurance
             )
         )
+
+        insurance.properties!! += property
+
+        insuranceRepository.save(insurance)
 
         propertyDto.rules?.let {
             it.forEach { ruleDto ->
@@ -84,5 +88,22 @@ class PropertyController(
         )
 
         return ResponseEntity.ok(propertyType.id)
+    }
+
+    override fun getPropertyType(id: UUID): ResponseEntity<PropertyTypeDto> {
+        val propertyType = propertyTypeRepository
+            .findById(id)
+            .getOrElse {
+                throw NotFoundException(msg = "property type with id [$id] not found")
+            }
+
+        return ResponseEntity.ok(
+            PropertyTypeDto(
+                id = propertyType.id,
+                name = propertyType.name,
+                description = propertyType.description,
+                type = propertyType.type,
+            )
+        )
     }
 }

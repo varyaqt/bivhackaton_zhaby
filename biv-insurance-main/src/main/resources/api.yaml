@@ -55,6 +55,29 @@ paths:
         '500':
           description: Database fail
 
+  /property/type/{id}:
+    get:
+      operationId: getPropertyType
+      tags:
+        - Property
+      description: Добавление типа свойства
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyTypeDto'
+        '500':
+          description: Database fail
+
   /dictionary:
     post:
       operationId: createDictionary

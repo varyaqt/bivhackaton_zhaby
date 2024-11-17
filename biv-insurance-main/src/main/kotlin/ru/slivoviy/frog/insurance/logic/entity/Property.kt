@@ -9,6 +9,7 @@ import jakarta.persistence.ManyToOne
 import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 import org.hibernate.annotations.JdbcTypeCode
+import org.hibernate.proxy.HibernateProxy
 import org.hibernate.type.SqlTypes
 import java.util.UUID
 
@@ -16,27 +17,48 @@ import java.util.UUID
 @Entity
 data class Property(
 
-    @Id
-    var id: UUID = UUID.randomUUID(),
+  @Id
+  var id: UUID = UUID.randomUUID(),
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "type_id", nullable = false)
-    var type: PropertyType,
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "type_id", nullable = false)
+  var type: PropertyType,
 
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "value", nullable = false)
-    var value: String,
+  @JdbcTypeCode(SqlTypes.JSON)
+  @Column(name = "value", nullable = false)
+  var value: String,
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "property")
-    var rules: MutableSet<Rule>? = null,
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "property")
+  var rules: MutableSet<Rule>? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rule_id", nullable = true)
-    var rule: Rule? = null,
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "rule_id", nullable = true)
+  var rule: Rule? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "insurance_id", nullable = true)
-    var insurance: Insurance? = null,
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "insurance_id", nullable = true)
+  var insurance: Insurance? = null,
 
 
-    )
+  ) {
+  final override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (other == null) return false
+    val oEffectiveClass =
+      if (other is HibernateProxy) other.hibernateLazyInitializer.persistentClass else other.javaClass
+    val thisEffectiveClass =
+      if (this is HibernateProxy) this.hibernateLazyInitializer.persistentClass else this.javaClass
+    if (thisEffectiveClass != oEffectiveClass) return false
+    other as Property
+
+    return id != null && id == other.id
+  }
+
+  final override fun hashCode(): Int =
+    if (this is HibernateProxy) this.hibernateLazyInitializer.persistentClass.hashCode() else javaClass.hashCode()
+
+  @Override
+  override fun toString(): String {
+    return this::class.simpleName + "(id = $id , value = $value , insurance = $insurance )"
+  }
+}

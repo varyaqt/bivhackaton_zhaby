@@ -29,7 +29,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:3.3.2")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.1")
     implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.0")
-    developmentOnly("org.springframework.boot:spring-boot-docker-compose:3.3.2")
     implementation("io.swagger.core.v3:swagger-annotations:2.2.25")
     implementation("io.swagger.core.v3:swagger-models:2.2.25")
     implementation("javax.validation:validation-api:2.0.1.Final")
