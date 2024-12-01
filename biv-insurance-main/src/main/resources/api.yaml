@@ -1,7 +1,12 @@
-openapi: 3.0.1
+openapi: 3.0.3
 info:
   title: BIV.Zhaby
   version: '1.0'
+servers:
+  - url: http://localhost:8082/
+
+security:
+  - bearerAuth: []
 paths:
 
   /property/{insuranceId}:
@@ -60,7 +65,7 @@ paths:
       operationId: getPropertyType
       tags:
         - Property
-      description: Добавление типа свойства
+      description: Получение типа свойства
       parameters:
         - name: id
           in: path
@@ -69,13 +74,16 @@ paths:
             type: string
             format: uuid
       responses:
-        '200':
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PropertyTypeDto'
-        '500':
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PropertyTypeDto'
+        500:
           description: Database fail
 
   /dictionary:
